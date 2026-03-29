@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IdleState", menuName = "Scriptable Objects/IdleState")]
-public class IdleState : Node
+[CreateAssetMenu(fileName = "PatrolState", menuName = "Scriptable Objects/PatrolState")]
+public class PatrolState : Node
 {
     public override bool EnterCondition(EnemyController ec)
     {
@@ -17,9 +17,11 @@ public class IdleState : Node
     public override void OnUpdate(EnemyController ec)
     {
         base.OnUpdate(ec);
-        Debug.Log("me toco el ano");
+        ec.GetComponent<PatrolBehavior>().Patrol();
+        Debug.Log("Patrulla canina");
     }
     public override void OnExit(EnemyController ec)
     {
+        ec.GetComponent<PatrolBehavior>().StopPatrol();
     }
 }

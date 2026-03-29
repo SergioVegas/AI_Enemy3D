@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Condition : MonoBehaviour
+public class Condition 
 {
     public string name;
     public bool check;

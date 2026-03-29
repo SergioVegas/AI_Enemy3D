@@ -17,7 +17,7 @@ public class RunState : Node
     public override void OnUpdate(EnemyController ec)
     {
         base.OnUpdate(ec);
-        ec.GetComponent<ChaseBehaviour>().Chase(ec.transform, ec.target.transform);
+        ec.GetComponent<ChaseBehaviour>().Chase(ec.transform);
         Debug.Log("huyo de tu ano");
     }
     public override void OnExit(EnemyController ec)

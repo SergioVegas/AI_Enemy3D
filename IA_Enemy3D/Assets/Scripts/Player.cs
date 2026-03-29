@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     protected MoveBehavior _mb;
     private InputSystem_Actions _actions;
+    public int HP = 10;
     protected float speedWalk = 10f;
  
     protected float actualSpeed;
@@ -27,6 +28,17 @@ public class Player : MonoBehaviour, InputSystem_Actions.IPlayerActions
     void Update()
     {
         _mb.ExecuteMovement(new Vector3(xVelocity, 0, zVelocity), actualSpeed);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+        Debug.Log("Player HP: " + HP);
+        if (HP <= 0)
+        {
+            Debug.Log("Player Dead!");
+            // Puedes añadir lógica de muerte aquí (ej: recargar escena)
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)

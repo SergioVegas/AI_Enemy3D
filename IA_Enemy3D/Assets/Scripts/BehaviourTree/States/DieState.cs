@@ -18,7 +18,7 @@ public class DieState : Node
     public override void OnUpdate(EnemyController ec)
     {
         base.OnUpdate(ec);
-        Debug.Log("te me explotaste el ano");
+        Debug.Log("Enemy Death");
 
     }
     public override void OnExit(EnemyController ec)

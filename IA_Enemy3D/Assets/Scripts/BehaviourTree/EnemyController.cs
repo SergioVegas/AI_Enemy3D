@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EnemyController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class EnemyController : MonoBehaviour
         chase = new Condition("Chase");
         die = new Condition("Dead");
         run = new Condition("Run");
-        AttackDistance = GetComponent<CircleCollider2D>().radius / 2f;
+        AttackDistance = GetComponent<CapsuleCollider>().radius;
         ChangeState();
     }
     private void OnTriggerEnter(Collider collision)
@@ -34,9 +35,19 @@ public class EnemyController : MonoBehaviour
     {
         attack.check = (target.transform.position - transform.position).magnitude <= AttackDistance;
     }
+    public int AttackDamage = 1;
+
     private void OnCollisionEnter(Collision collision)
     {
-        OnHurt();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage(AttackDamage);
+                Debug.Log("Enemigo atacó al jugador!");
+            }
+        }
     }
     public void OnHurt()
     {
@@ -47,10 +58,20 @@ public class EnemyController : MonoBehaviour
         {
             die.check = true;
         }
+        ChangeState();
     }
     private void Update()
     {
-        currentState.OnUpdate(this);
+        if (Keyboard.current != null && Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            HP = 0;
+            die.check = true;
+            ChangeState();
+            Debug.Log("Enemigo eliminado por comando (P)");
+        }
+
+        if (currentState != null)
+            currentState.OnUpdate(this);
     }
     public void ChangeState()
     {

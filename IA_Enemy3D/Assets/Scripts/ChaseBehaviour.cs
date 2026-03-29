@@ -1,26 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 public class ChaseBehaviour : MonoBehaviour
 {
     public float Speed;
-    private Rigidbody2D _rb;
+    private NavMeshAgent _navAgent;
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _navAgent = GetComponent<NavMeshAgent>();
+        _navAgent.speed = Speed;
     }
-    public void Chase(Transform target, Transform self)
+    public void Chase(Transform target)
     {
-        _rb.linearVelocity = (target.position - self.position).normalized * Speed;
+        _navAgent.isStopped = false;
+        _navAgent.SetDestination(target.position);
     }
     public void Run(Transform target, Transform self)
     {
-        _rb.linearVelocity = (target.position - self.position).normalized * -Speed;
+        _navAgent.isStopped = false;
+
+        Vector3 runningAwayDirection = (self.position - target.position).normalized;
+
+        Vector3 escapePoint = self.position + runningAwayDirection * 10f;
+
+        _navAgent.SetDestination(escapePoint);
     }
 
     public void StopChasing()
     {
-        _rb.linearVelocity = Vector2.zero;
+        _navAgent.isStopped = true;
     }
 }

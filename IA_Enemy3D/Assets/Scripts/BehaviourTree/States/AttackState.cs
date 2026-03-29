@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewScriptableObjectScript", menuName = "Scriptable Objects/AttackState")]
+[CreateAssetMenu(fileName = "AttackState", menuName = "Scriptable Objects/AttackState")]
 public class AttackState : Node
 {
     public override bool EnterCondition(EnemyController ec)
@@ -13,7 +13,6 @@ public class AttackState : Node
     }
     public override void OnStart(EnemyController ec)
     {
-        ec.GetComponent<Animator>().SetBool(ec.attack.name, ec.attack.check);
     }
     public override void OnUpdate(EnemyController ec)
     {
@@ -22,6 +21,5 @@ public class AttackState : Node
     }
     public override void OnExit(EnemyController ec)
     {
-        ec.GetComponent<Animator>().SetBool(ec.attack.name, ec.attack.check);
     }
 }
